@@ -19,6 +19,7 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.5.0",
         "@inertiajs/inertia-vue": "^0.4.1",
+        "@inertiajs/progress": "^0.1.2",
         "bootstrap": "^4.5.3",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1",
