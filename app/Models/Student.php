@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\TeachingGroup;
+use App\Models\AssessmentSource;
 use App\Models\Baseline;
 
 class Student extends Model
@@ -25,5 +26,12 @@ class Student extends Model
     public function baselines()
     {
         return $this->hasMany(Baseline::class);
+    }
+
+    public function baseline_for_assessment_source(AssessmentSource $assessment_source)
+    {
+        return $this->baselines()->where('assessment_source_id', '=', $assessment_source->id)->firstOr(function() {
+            return 'NOBASELINE';
+        });
     }
 }
