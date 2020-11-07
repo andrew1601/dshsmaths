@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'arbor' => [
+      'endpoint' => env('ARBOR_GRAPHQL_ENDPOINT'),
+      'username' => env('ARBOR_GRAPHQL_USERNAME'),
+      'password' => env('ARBOR_GRAPHQL_PASSWORD'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
