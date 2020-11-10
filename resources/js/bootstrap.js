@@ -12,6 +12,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 import { InertiaProgress } from '@inertiajs/progress'
 
+import 'bootstrap/dist/js/bootstrap'
+
 InertiaProgress.init();
 
 /**

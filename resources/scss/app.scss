@@ -1,3 +1,35 @@
-.test {
-    color: red;
+@font-face {
+    font-family: "Pacifico";
+    src: url('/fonts/Pacifico.rtf');
 }
+
+@font-face {
+    font-family: "Neutraface Text";
+    src: url('/fonts/NeutraText-Book.otf');
+}
+
+@font-face {
+    font-family: "Neutraface Text";
+    font-style: italic;
+    src: url('/fonts/NeutraText-BookItalic.otf');
+}
+
+@font-face {
+    font-family: "Neutraface Text";
+    font-weight: bold;
+    src: url('/fonts/NeutraText-Bold.otf');
+}
+
+@font-face {
+    font-family: "Neutraface Text";
+    font-weight: bold;
+    font-style: italic;
+    src: url('/fonts/NeutraText-BoldItalic.otf');
+}
+
+$theme-colors: (
+    "primary": #3a8bc0
+);
+
+@import 'bootstrap';
+@import '~animate.css';
