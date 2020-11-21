@@ -9,6 +9,9 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav">
+
+            </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navManageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -17,6 +20,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navManageDropdown">
                         <inertia-link href="/arbor-import" class="dropdown-item">Arbor Sync</inertia-link>
                         <inertia-link href="/teaching-groups" class="dropdown-item">Teaching Groups</inertia-link>
+                        <inertia-link href="/tests" class="dropdown-item" active-class="active">Tests</inertia-link>
                     </div>
                 </li>
             </ul>

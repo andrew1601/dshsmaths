@@ -20,11 +20,13 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "@handsontable/vue": "^5.1.0",
         "@inertiajs/inertia": "^0.5.1",
         "@inertiajs/inertia-vue": "^0.4.0",
         "@inertiajs/progress": "^0.1.2",
         "animate.css": "^4.1.1",
         "bootstrap": "^4.5.3",
+        "handsontable": "^8.1.0",
         "jquery": "^3.5.1",
         "popper.js": "^1.16.1",
         "vue": "^2.6.12"

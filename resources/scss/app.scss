@@ -28,8 +28,10 @@
 }
 
 $theme-colors: (
-    "primary": #3a8bc0
+    "primary": #3a8bc0,
+    'secondary': #e06c51
 );
 
 @import 'bootstrap';
 @import '~animate.css';
+@import '~handsontable/dist/handsontable.css';
