@@ -23,7 +23,7 @@ Route::get('/', function() {
     return Inertia::render('Index');
 });
 
-Route::get('/arbor-import', [ArborImportController::class, 'import_wizard']);
+Route::get('/arbor-import', [ArborImportController::class, 'import_wizard'])->name('arbor-import');
 Route::patch('/arbor-import', [ArborImportController::class, 'import_wizard']);
 Route::post('/arbor-import', [ArborImportController::class, 'import']);
 
@@ -32,6 +32,8 @@ Route::get('/teaching-groups/{teaching_group}', [TeachingGroupController::class,
 
 Route::get('/tests', [TestController::class, 'index']);
 Route::post('tests', [TestController::class, 'store']);
-Route::get('/tests/{test}', [TestController::class, 'show']);
-
 Route::get('/tests/create', [TestController::class, 'create']);
+Route::get('/tests/{test}', [TestController::class, 'show']);
+Route::get('/tests/{test}/assign', [TestController::class, 'show_assign'])->name('tests.assign.show');
+Route::patch('/tests/{test}/assign', [TestController::class, 'assign'])->name('tests.assign');
+Route::delete('/tests/{test}/assign', [TestController::class, 'assign'])->name('tests.assign.delete');

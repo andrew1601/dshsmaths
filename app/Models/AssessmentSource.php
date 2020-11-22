@@ -31,4 +31,9 @@ class AssessmentSource extends Model
             return 'NOBASELINE';
         });
     }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class);
+    }
 }

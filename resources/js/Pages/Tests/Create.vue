@@ -11,6 +11,13 @@
             <input class="form-control" type="text" id="testName" placeholder="Test name" v-model="testName">
         </div>
 
+        <div class="form-group mt-3">
+            <select name="test_assessment_source" id="testAssessmentSource" class="custom-select" v-model="selectedAssessmentSource">
+                <option :value="null" selected disabled>Select an assessment source to associate this test with...</option>
+                <option v-for="assessmentSource in assessmentSources" :key="assessmentSource.id" :value="assessmentSource.id">{{ assessmentSource.name }}</option>
+            </select>
+        </div>
+
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">
@@ -76,7 +83,8 @@ export default {
     },
 
     props: [
-        'errors'
+        'errors',
+        'assessmentSources'
     ],
 
     mounted() {
@@ -86,6 +94,7 @@ export default {
     data() {
         return {
             testName: '',
+            selectedAssessmentSource: null,
             maxPapers: 4,
             currentPaperIndex: 0,
             papers: [
@@ -136,7 +145,7 @@ export default {
                 questions: paper.questions.filter(row => !((row.number === null) && (row.area === null) && (row.topic === null) && (row.marks === null)))
             }));
 
-            this.$inertia.post('/tests', {name, papers, gradeBoundaries});
+            this.$inertia.post('/tests', {name, assessmentSource: this.selectedAssessmentSource, papers, gradeBoundaries});
         }
     },
     computed: {

@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Paper;
-use App\Models\Question;
-use App\Models\GradeBoundary;
-
 class Test extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
+
+    public function assessment_source()
+    {
+        return $this->belongsTo(AssessmentSource::class);
+    }
 
     public function papers()
     {
@@ -23,5 +24,10 @@ class Test extends Model
     public function grade_boundaries()
     {
         return $this->hasMany(GradeBoundary::class);
+    }
+
+    public function teaching_groups()
+    {
+        return $this->belongsToMany(TeachingGroup::class);
     }
 }

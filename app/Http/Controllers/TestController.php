@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AssessmentSource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 use App\Models\Test;
-use App\Models\Paper;
-use App\Models\Question;
-use App\Models\GradeBoundary;
+use App\Models\TeachingGroup;
 
 class TestController extends Controller
 {
     public function index()
     {
-        $tests = Test::all();
+        $tests = Test::with(['papers', 'papers.questions'])->get();
         return Inertia::render('Tests/Index', [
             'tests' => $tests
         ]);
@@ -22,7 +21,11 @@ class TestController extends Controller
 
     public function create()
     {
-        return Inertia::render('Tests/Create');
+        $assessment_sources = AssessmentSource::all();
+
+        return Inertia::render('Tests/Create', [
+            'assessmentSources' => $assessment_sources
+        ]);
     }
 
     public function show(Test $test)
@@ -38,6 +41,7 @@ class TestController extends Controller
         /*
          * Data looks like
          *   name
+         *   assessmentSource
          *   papers: [ {name, questions: [ { number, area, topic, marks } ] } ]
          *   gradeBoundaries: [ { grade, marks } ]
          *
@@ -48,6 +52,7 @@ class TestController extends Controller
         // TODO: old input??
         $validated_data = request()->validate([
             'name' => 'required|string',
+            'assessmentSource' => 'required|integer|exists:assessment_sources,id',
             'papers' => 'required|array',
             'papers.*.name' => 'string',
             'papers.*.questions' => 'required|array',
@@ -62,8 +67,15 @@ class TestController extends Controller
 
         // Create the test
         $test = Test::create([
-            'name' => $validated_data['name']
+            'name' => $validated_data['name'],
         ]);
+
+        // Get the assessment source
+        $assessment_source = AssessmentSource::findOrFail($validated_data['assessmentSource']);
+
+        // Associate it with the test
+        $test->assessment_source()->associate($assessment_source);
+        $test->save();
 
         // Create the papers
 
@@ -93,6 +105,46 @@ class TestController extends Controller
         }
 
         // Should be done...
+        // TODO: return an actual inertia response!!
         dd('done');
     }
+
+    public function show_assign(Test $test)
+    {
+
+        $test->load(['assessment_source', 'assessment_source.teaching_groups', 'teaching_groups']);
+//
+//        dd($test);
+
+
+        return Inertia::render('Tests/Assign', [
+            'test' => $test,
+            'teachingGroups' => $test->assessment_source->teaching_groups,
+        ]);
+    }
+
+    public function assign(Test $test)
+    {
+        /*
+         * Data looks like
+         * { teachingGroupId }
+         *
+         * Let's validate!
+         */
+
+        $validated_data = request()->validate([
+            'teachingGroupId' => 'required|integer',
+        ]);
+
+        $teaching_group = TeachingGroup::findOrFail($validated_data['teachingGroupId']);
+
+        // This will create the association if it doesn't already exist, or delete it if it does.
+        $test->teaching_groups()->toggle($teaching_group);
+
+
+        // Should be done...
+        // Redirect back to the assignment page for this test
+        return redirect()->route('tests.assign.show', [$test]);
+    }
+
 }
