@@ -105,8 +105,7 @@ class TestController extends Controller
         }
 
         // Should be done...
-        // TODO: return an actual inertia response!!
-        dd('done');
+        return redirect()->route('tests.show');
     }
 
     public function show_assign(Test $test)

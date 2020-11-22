@@ -30,7 +30,7 @@ Route::post('/arbor-import', [ArborImportController::class, 'import']);
 Route::get('/teaching-groups', [TeachingGroupController::class, 'index']);
 Route::get('/teaching-groups/{teaching_group}', [TeachingGroupController::class, 'show']);
 
-Route::get('/tests', [TestController::class, 'index']);
+Route::get('/tests', [TestController::class, 'index'])->name('tests.show');
 Route::post('tests', [TestController::class, 'store']);
 Route::get('/tests/create', [TestController::class, 'create']);
 Route::get('/tests/{test}', [TestController::class, 'show']);
