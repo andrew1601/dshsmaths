@@ -3,6 +3,7 @@
         <h3>Test Assignment</h3>
         <h4 class="text-muted">{{test.name}}</h4>
         <h5 class="text-muted">{{test.assessment_source.name}}</h5>
+        <p class="text-muted">Click on a teaching group to assign this test to them. You can only assign to a teaching group that is associated with the same assessment source as this test. Click on an assigned teaching group to unassign this test. Student marks will not be lost when you unassign a test.</p>
 
         <div class="alert alert-danger my-3" v-if="Object.keys(errors).length > 0">
             <h4 class="alert-heading">Oops...</h4>
@@ -12,23 +13,29 @@
         <div class="row my-5">
             <div class="col-6">
                 <div class="card">
-                    <h5 class="card-header">Available Assignments</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="teachingGroup in teachingGroups" :key="teachingGroup.id" @click="toggleAssign(teachingGroup.id)">
+                    <h5 class="card-header">Available Teaching Groups</h5>
+                    <ul class="list-group list-group-flush" v-if="teachingGroups.length > 0">
+                        <li class="list-group-item available-teaching-group" v-for="teachingGroup in teachingGroups" :key="teachingGroup.id" @click="toggleAssign(teachingGroup.id)">
                             {{ teachingGroup.name }}
                         </li>
                     </ul>
+                    <div class="card-body" v-else>
+                        <p class="text-muted text-center">No teaching groups available :(</p>
+                    </div>
                 </div>
             </div>
 
             <div class="col-6">
                 <div class="card">
-                    <h5 class="card-header">Current Assignments</h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item" v-for="teachingGroup in test.teaching_groups" :key="teachingGroup.id" @click="toggleAssign(teachingGroup.id)">
+                    <h5 class="card-header">Assigned Teaching Groups</h5>
+                    <ul class="list-group list-group-flush" v-if="test.teaching_groups.length > 0">
+                        <li class="list-group-item assigned-teaching-group" v-for="teachingGroup in test.teaching_groups" :key="teachingGroup.id" @click="toggleAssign(teachingGroup.id)">
                             {{ teachingGroup.name }}
                         </li>
                     </ul>
+                    <div class="card-body" v-else>
+                        <p class="text-muted text-center">No teaching groups assigned :(</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -54,7 +61,12 @@ export default {
 
 <style scoped>
 
-    .list-group-item:hover {
+    .assigned-teaching-group:hover {
+        background-color: rgba(255, 0, 0, 0.075);
+        cursor: pointer;
+    }
+
+    .available-teaching-group:hover {
         background-color: rgba(0, 0, 0, 0.075);
         cursor: pointer;
     }

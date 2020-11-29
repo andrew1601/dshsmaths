@@ -13,7 +13,7 @@ class TestController extends Controller
 {
     public function index()
     {
-        $tests = Test::with(['papers', 'papers.questions'])->get();
+        $tests = Test::with(['assessment_source', 'papers', 'papers.questions', 'teaching_groups'])->get();
         return Inertia::render('Tests/Index', [
             'tests' => $tests
         ]);
@@ -105,6 +105,7 @@ class TestController extends Controller
         }
 
         // Should be done...
+        // Thanks for playing, see you again soon.
         return redirect()->route('tests.show');
     }
 
@@ -112,13 +113,17 @@ class TestController extends Controller
     {
 
         $test->load(['assessment_source', 'assessment_source.teaching_groups', 'teaching_groups']);
-//
-//        dd($test);
 
+        // We are only returning the teaching groups associated with the same assessment source as the test.
+        // But we only want the teaching groups not currently assigned.
+        $teaching_groups = $test->assessment_source->teaching_groups;
+        $teaching_groups = $teaching_groups->filter(function ($teaching_group) use ($test) {
+            return !($test->teaching_groups->contains($teaching_group));
+        })->values(); // Call values() to re-key the underlying array with consecutive keys starting at 0. This prevents front end bug where it was treating a collection with a single teaching groups as an object.
 
         return Inertia::render('Tests/Assign', [
             'test' => $test,
-            'teachingGroups' => $test->assessment_source->teaching_groups,
+            'teachingGroups' => $teaching_groups,
         ]);
     }
 
@@ -138,12 +143,36 @@ class TestController extends Controller
         $teaching_group = TeachingGroup::findOrFail($validated_data['teachingGroupId']);
 
         // This will create the association if it doesn't already exist, or delete it if it does.
+        // NOTE: the check on assessment sources matching between test and teaching group is not performed. Shouldn't be a problem, that's only for effective filtering of
+        // a large amount of possible teaching groups.
         $test->teaching_groups()->toggle($teaching_group);
 
 
         // Should be done...
         // Redirect back to the assignment page for this test
         return redirect()->route('tests.assign.show', [$test]);
+    }
+
+    public function edit(Test $test)
+    {
+        $test->load(['papers', 'papers.questions', 'grade_boundaries']);
+        $assessment_sources = AssessmentSource::all();
+
+        return Inertia::render('Tests/Create', [
+            'assessmentSources' => $assessment_sources,
+            'editing' => true,
+            'test' => $test,
+        ]);
+    }
+
+    public function destroy(Test $test)
+    {
+        // We want to check the delete was confirmed, there should be a confirmText parameter in the query string
+        if(request()->has('confirmText') && request()->query('confirmText') == "DELETE")
+        {
+            $test->delete();
+            return redirect()->route('tests.show');
+        }
     }
 
 }

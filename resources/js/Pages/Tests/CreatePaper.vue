@@ -44,7 +44,9 @@ export default {
         'value'
     ],
     mounted() {
-        this.$refs.paperHot.hotInstance.loadData(this.value.questions);
+        console.log('CreatePaper.vue')
+        console.dir(this.value.questions);
+        this.$refs.paperHot.hotInstance.loadData(this.paper.questions);
     },
 
     data() {
@@ -70,7 +72,7 @@ export default {
         },
         value() {
             this.paper = this.value;
-            this.$refs.paperHot.hotInstance.loadData(this.value.questions);
+            this.$refs.paperHot.hotInstance.loadData(this.paper.questions);
         }
 
     }

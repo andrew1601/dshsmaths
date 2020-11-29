@@ -1,6 +1,6 @@
 <template>
     <layout>
-        <h3>Create Test</h3>
+        <h3>{{ editing ? 'Edit' : 'Create' }} a Test</h3>
 
         <div class="alert alert-danger my-3" v-if="Object.keys(errors).length > 0">
             <h4 class="alert-heading">Oops...</h4>
@@ -40,6 +40,7 @@
                     </div>
                     <div class="card-body">
                         <h6 class="text-muted" v-if="papers.length === 0">No papers.</h6>
+                        <h6 class="text-muted" v-else-if="currentPaperIndex === -1">No paper selected.</h6>
                         <create-paper v-model="papers[currentPaperIndex]" v-else></create-paper>
                     </div>
                 </div>
@@ -64,8 +65,6 @@
             </div>
         </div>
 
-
-
     </layout>
 </template>
 
@@ -83,11 +82,30 @@ export default {
     },
 
     props: [
+        'editing',
+        'test',
         'errors',
         'assessmentSources'
     ],
-
-    mounted() {
+    created() {
+        if (this.editing){
+            console.dir(this.test) // need to see this data, but bug with Vue devtools and refs on HOT instances.
+            // load in the data
+            this.testName = this.test.name;
+            this.papers = this.test.papers.map(paper => ({
+                name: paper.name,
+                questions: paper.questions.map(question => ({
+                    number: question.number,
+                    area: question.area,
+                    topic: question.topic,
+                    marks: question.marks
+                }))
+            }));
+            this.gradeBoundaries = this.test.grade_boundaries.map(grade_boundary => { return {grade: grade_boundary.grade, marks: grade_boundary.mark} });
+            this.selectedAssessmentSource = this.test.assessment_source_id;
+        }
+    },
+    mounted(){
         this.$refs.gradeBoundariesHot.hotInstance.loadData(this.gradeBoundaries);
     },
 
@@ -96,17 +114,12 @@ export default {
             testName: '',
             selectedAssessmentSource: null,
             maxPapers: 4,
-            currentPaperIndex: 0,
-            papers: [
-                {
-                    name: '',
-                    questions: [],
-                },
-            ],
+            currentPaperIndex: -1,
+            papers: [],
             gradeBoundaries: [],
             gradeBoundariesHotSettings: {
                 dataSchema: {grade: null, marks: null},
-                data: [],
+                data: this.gradeBoundaries,
                 colHeaders: ['Grade', 'Min. Mark'],
                 stretchH: 'all',
                 width: '100%',

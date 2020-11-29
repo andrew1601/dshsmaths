@@ -13,7 +13,7 @@ class Test extends Model
 
     public function assessment_source()
     {
-        return $this->belongsTo(AssessmentSource::class);
+        return $this->belongsTo(AssessmentSource::class, 'assessment_source_id', 'id');
     }
 
     public function papers()

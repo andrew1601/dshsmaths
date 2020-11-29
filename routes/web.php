@@ -34,6 +34,9 @@ Route::get('/tests', [TestController::class, 'index'])->name('tests.show');
 Route::post('tests', [TestController::class, 'store']);
 Route::get('/tests/create', [TestController::class, 'create']);
 Route::get('/tests/{test}', [TestController::class, 'show']);
+//Front end isn't playing ball. Can't be arsed to look at it anymore, it's making me angry. TODO: fix this before production.
+//Route::get('/tests/{test}/edit', [TestController::class, 'edit']);
+Route::delete('/tests/{test}', [TestController::class, 'destroy']);
 Route::get('/tests/{test}/assign', [TestController::class, 'show_assign'])->name('tests.assign.show');
 Route::patch('/tests/{test}/assign', [TestController::class, 'assign'])->name('tests.assign');
 Route::delete('/tests/{test}/assign', [TestController::class, 'assign'])->name('tests.assign.delete');
