@@ -106,7 +106,7 @@ class TestController extends Controller
 
         // Should be done...
         // Thanks for playing, see you again soon.
-        return redirect()->route('tests.show');
+        return redirect()->route('tests.index');
     }
 
     public function show_assign(Test $test)
@@ -171,7 +171,7 @@ class TestController extends Controller
         if(request()->has('confirmText') && request()->query('confirmText') == "DELETE")
         {
             $test->delete();
-            return redirect()->route('tests.show');
+            return redirect()->route('tests.index');
         }
     }
 

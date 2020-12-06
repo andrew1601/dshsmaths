@@ -30,4 +30,17 @@ class Test extends Model
     {
         return $this->belongsToMany(TeachingGroup::class);
     }
+
+    public function grade_from_total_marks($total_marks)
+    {
+        $current_grade = "";
+        foreach($this->grade_boundaries as $grade_boundary) {
+            if ($total_marks >= $grade_boundary->mark)
+                $current_grade = $grade_boundary->grade;
+            else
+                break;
+        }
+
+        return $current_grade;
+    }
 }

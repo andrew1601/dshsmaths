@@ -23,4 +23,14 @@ class Paper extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public function marks()
+    {
+        return $this->hasManyThrough(Mark::class, Question::class);
+    }
+
+    public function marks_for_student(Student $student)
+    {
+
+    }
 }

@@ -17,4 +17,11 @@ class Question extends Model
     {
         return $this->belongsTo(Paper::class);
     }
+
+    public function marks()
+    {
+        return $this->hasMany(Mark::class);
+    }
+
+
 }

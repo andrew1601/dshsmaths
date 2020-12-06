@@ -1,7 +1,7 @@
 <template>
     <div>
         <app-navigation></app-navigation>
-        <div class="container pt-3">
+        <div :class="{'container': this.container, 'mx-3': !this.container ,'pt-3': true }">
             <slot></slot>
         </div>
     </div>
@@ -12,6 +12,11 @@ import AppNavigation from './Navigation';
 
 export default {
     name: "Layout",
+    props: {
+        container: {
+            default: true
+        }
+    },
     components: {
         AppNavigation
     }

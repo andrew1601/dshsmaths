@@ -10,7 +10,21 @@
 
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav">
-
+                <li class="nav-item">
+                    <inertia-link href="/data-entry" :class="{'nav-link': true, 'active': route().current('data-entry.*')}">Data Entry</inertia-link>
+                </li>
+                <li class="nav-item">
+                    <inertia-link href="/analysis" :class="{'nav-link': true, 'active': route().current('analysis.*')}">Analysis</inertia-link>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="navExportDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Export
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navExportDropdown">
+                        <inertia-link href="/export/analysis" :class="{'dropdown-item': true, 'active': route().current('export.analysis.*')}">Analysis Sheets</inertia-link>
+                        <inertia-link href="/export/yellow-sheets" :class="{'dropdown-item': true, 'active': route().current('export.yellow-sheets.*')}">Yellow Sheets</inertia-link>
+                    </div>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
@@ -18,9 +32,9 @@
                         Manage
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navManageDropdown">
-                        <inertia-link href="/arbor-import" class="dropdown-item">Arbor Sync</inertia-link>
-                        <inertia-link href="/teaching-groups" class="dropdown-item">Teaching Groups</inertia-link>
-                        <inertia-link href="/tests" class="dropdown-item" active-class="active">Tests</inertia-link>
+                        <inertia-link href="/arbor-import" :class="{'dropdown-item': true, 'active': route().current('arbor-import.*')}">Arbor Sync</inertia-link>
+                        <inertia-link href="/teaching-groups" :class="{'dropdown-item': true, 'active': route().current('teaching-groups.*')}">Teaching Groups</inertia-link>
+                        <inertia-link href="/tests" class="dropdown-item" :class="{'dropdown-item': true, 'active': route().current('tests.*')}">Tests</inertia-link>
                     </div>
                 </li>
             </ul>
