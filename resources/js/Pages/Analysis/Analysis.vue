@@ -72,7 +72,7 @@
                         <div class="row field-label">Grade Boundaries</div>
                         <div class="row">
                             <table class="table table-sm table-bordered">
-                                <tr v-for="gradeBoundary in analysis.test.grade_boundaries">
+                                <tr v-for="gradeBoundary in analysis.test.grade_boundaries" :key="`gb-${gradeBoundary.id}`" :class="{'active-grade-boundary': gradeBoundary.grade === analysis.grade}">
                                     <td>{{ gradeBoundary.mark }}</td>
                                     <td>{{ gradeBoundary.grade }}</td>
                                 </tr>
@@ -154,7 +154,7 @@ export default {
     }
 
     .key-label {
-        font-size: 0.6em;
+        font-size: 0.8em;
         text-align: center;
         border: 1px black solid;
         border-top: none;
@@ -173,11 +173,15 @@ export default {
         background: rgb(255,255,200);
     }
 
-    .key-label-75-100, .question-highlight-75-100 {
+    .key-label-75-100, .question-highlight-75-100{
         background: rgb(200,255,200);
     }
 
     .key-label-100, .question-highlight-100 {
         background: rgb(200,200,255);
+    }
+
+    .active-grade-boundary {
+        background: rgb(220, 220, 220);
     }
 </style>

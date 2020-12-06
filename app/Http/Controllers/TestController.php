@@ -85,8 +85,10 @@ class TestController extends Controller
             ]);
 
             // Store the questions
+            $rank = 0;
             foreach($_paper['questions'] as $_question) {
                 $paper->questions()->create([
+                    'rank' => $rank++,
                    'number' => $_question['number'],
                     'area' => $_question['area'],
                     'topic' => $_question['topic'],
