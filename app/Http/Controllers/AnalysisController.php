@@ -26,10 +26,6 @@ class AnalysisController extends Controller
 
         $test->load(['papers', 'papers.questions', 'grade_boundaries']);
 
-//        $student->load(['baselines' => function ($query) use ($test) {
-//            $query->where('assessment_source_id', $test->assessment_source->id);
-//        }]);
-
         $student->baseline = $student->baseline_for_assessment_source($test->assessment_source);
         $total_marks = 0;
         $marks = [];

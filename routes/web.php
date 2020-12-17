@@ -9,6 +9,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\DataEntryController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\AnalysisController;
+use App\Http\Controllers\ExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,5 @@ Route::patch('/marks', [MarkController::class, 'save']);
 
 Route::get('/analysis', [AnalysisController::class, 'index'])->name('analysis.index');
 Route::get('/analysis/test/{test}/teaching-group/{teaching_group}/student/{student}', [AnalysisController::class, 'show'])->name('analysis.show');
+
+Route::get('/pdf-test', [ExportController::class, 'test']);

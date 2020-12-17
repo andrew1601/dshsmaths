@@ -1,6 +1,6 @@
 <template>
     <div class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="/">
             <img src="/img/dshs_badge_white.png" width="32" alt="DSHS Logo" class="mr-2">
             DSHS Maths
         </a>
