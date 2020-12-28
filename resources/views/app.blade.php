@@ -6,8 +6,8 @@
         <link rel="shortcut icon" href="/favicon.ico">
         <link rel="icon" href="/favicon.ico">
         <title>{{ env('APP_NAME') }}</title>
-        <link rel="stylesheet" href="{{ mix('/css/app.css') }}" type="text/css">
-        <script src="{{ mix('/js/app.js') }}" defer></script>
+        <link rel="stylesheet" href="{{ url(mix('/css/app.css')) }}" type="text/css">
+        <script src="{{ url(mix('/js/app.js')) }}" defer></script>
     </head>
     <body>
         @inertia
