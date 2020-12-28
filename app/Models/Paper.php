@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 use App\Models\Test;
 use App\Models\Question;
@@ -11,6 +12,7 @@ use App\Models\Question;
 class Paper extends Model
 {
     use HasFactory;
+    use HasRelationships;
 
     protected $guarded = [];
 
@@ -31,6 +33,6 @@ class Paper extends Model
 
     public function marks_for_student(Student $student)
     {
-
+        return $this->marks()->getQuery()->where('student_upn', $student->upn)->sum('mark');
     }
 }

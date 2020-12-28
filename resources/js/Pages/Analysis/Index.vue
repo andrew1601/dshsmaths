@@ -80,7 +80,7 @@ export default {
     },
     methods: {
         loadAnalysis() {
-            this.$inertia.get(`/analysis/test/${this.selectedTestId}/teaching-group/${this.selectedTeachingGroupId}/student/${this.selectedStudentUpn}`);
+            this.$inertia.get(`${this.$page.props.appUrl}/analysis/test/${this.selectedTestId}/teaching-group/${this.selectedTeachingGroupId}/student/${this.selectedStudentUpn}`);
         }
     }
 }

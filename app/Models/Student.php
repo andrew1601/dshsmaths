@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Scopes\SurnameScope;
+
 use App\Models\TeachingGroup;
 use App\Models\AssessmentSource;
 use App\Models\Baseline;
@@ -12,6 +14,13 @@ use App\Models\Baseline;
 class Student extends Model
 {
     use HasFactory;
+
+    protected static function booted()
+    {
+        static::addGlobalScope(new SurnameScope);
+    }
+
+
     protected $primaryKey = 'upn';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -34,4 +43,5 @@ class Student extends Model
             return 'NOBASELINE';
         });
     }
+
 }

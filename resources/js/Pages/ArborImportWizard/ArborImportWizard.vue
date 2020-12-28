@@ -1,6 +1,6 @@
 <template>
     <layout>
-        <h2><img src="/img/arbor-icon.png" width="32" class="mr-2" alt="">Arbor Import Wizard</h2>
+        <h2><img :src="`${this.$page.props.appUrl}/img/arbor-icon.png`" width="32" class="mr-2" alt="">Arbor Import Wizard</h2>
 
         <div class="alert alert-danger my-3" v-if="Object.keys(errors).length > 0">
             <h4 class="alert-heading">Oops...</h4>
@@ -70,14 +70,14 @@ export default {
         EventBus.$on('input-academic-year', payload => {
             this.selectedAcademicYear = payload;
             this.currentStep.completed = payload !== null;
-            this.$inertia.patch('/arbor-import', {academic_year: this.selectedAcademicYear}, {preserveState: true})
+            this.$inertia.patch(`${this.$page.props.appUrl}/arbor-import`, {academic_year: this.selectedAcademicYear}, {preserveState: true})
         });
 
         EventBus.$on('input-subjects', payload => {
             this.selectedSubjects = payload;
             this.selectedTeachingGroups = this.selectedTeachingGroups.filter(tg => payload.findIndex(s => s.id === tg.subject.id) >= 0);
             this.currentStep.completed = payload.length > 0;
-            this.$inertia.patch('/arbor-import', {academic_year: this.selectedAcademicYear, subjects: payload.map(s => s.id)}, {preserveState: true, only: ['teachingGroups', 'assessmentSources'] });
+            this.$inertia.patch(`${this.$page.props.appUrl}/arbor-import`, {academic_year: this.selectedAcademicYear, subjects: payload.map(s => s.id)}, {preserveState: true, only: ['teachingGroups', 'assessmentSources'] });
         });
 
         EventBus.$on('input-teaching-groups', payload => {
@@ -185,7 +185,7 @@ export default {
             const assessmentSources = Object.fromEntries(pairingsArray);
             const teachingGroups = this.selectedTeachingGroups.map(tg => tg.id);
 
-            this.$inertia.post('/arbor-import', { academic_year: this.selectedAcademicYear, teaching_groups: teachingGroups, assessment_sources: assessmentSources }, {
+            this.$inertia.post(`${this.$page.props.appUrl}/arbor-import`, { academic_year: this.selectedAcademicYear, teaching_groups: teachingGroups, assessment_sources: assessmentSources }, {
                 onStart: () => {
                     this.importing = true;
                     this.importProgress = 0;

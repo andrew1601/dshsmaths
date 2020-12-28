@@ -8,6 +8,12 @@ import Layout from "./Shared/Layout";
 import route from 'ziggy';
 import { Ziggy } from './ziggy';
 
+import jQuery from 'jquery';
+window.jQuery = jQuery;
+import 'bootstrap-table/dist/bootstrap-table';
+import 'bootstrap-table/dist/bootstrap-table.min.css';
+
+
 Vue.mixin({
     methods: {
         route: (name, params, absolute, config = Ziggy) => route(name, params, absolute, config),

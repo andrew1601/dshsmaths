@@ -53,7 +53,7 @@ export default {
     ],
     methods: {
         toggleAssign(teachingGroupId) {
-            this.$inertia.patch(`/tests/${this.test.id}/assign`, {teachingGroupId});
+            this.$inertia.patch(`${this.$page.props.appUrl}/tests/${this.test.id}/assign`, {teachingGroupId});
         },
     }
 }

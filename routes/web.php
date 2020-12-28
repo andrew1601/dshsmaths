@@ -11,6 +11,9 @@ use App\Http\Controllers\MarkController;
 use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\ExportController;
 
+use App\Models\TeachingGroup;
+use App\Models\AssessmentSource;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +25,39 @@ use App\Http\Controllers\ExportController;
 |
 */
 Route::get('/', function() {
-    return Inertia::render('Index');
+    $assessment_sources = AssessmentSource::all();
+
+    $assessment_source = null;
+    $marksheet = null;
+
+    if (request()->has('assessment_source')) {
+        $assessment_source = AssessmentSource::find(request()->query('assessment_source'));
+        $assessment_source->load(['students', 'tests', 'tests.papers']);
+
+        // Generate marksheet for assessment source
+        $marksheet = [];
+        foreach ($assessment_source->students as $student) {
+            $marksheet[$student->upn] = [];
+            $marksheet[$student->upn]['student'] = $student;
+            $marksheet[$student->upn]['student']['igr'] = $student->baseline_for_assessment_source($assessment_source)->igr();
+            $marksheet[$student->upn]['tests'] = [];
+            $p = 0;
+            foreach ($assessment_source->tests as $test) {
+                $total_marks = 0;
+                $marksheet[$student->upn]['tests'][$p] = [];
+                $marksheet[$student->upn]['tests'][$p]['papers'] = [];
+                foreach ($test->papers as $paper) {
+                   array_push($marksheet[$student->upn]['tests'][$p]['papers'], $paper->marks_for_student($student));
+                    $total_marks += $paper->marks_for_student($student);
+                }
+                $marksheet[$student->upn]['tests'][$p]['total_marks'] = $total_marks;
+                $marksheet[$student->upn]['tests'][$p]['grade'] = $test->grade_from_total_marks($total_marks);
+                ++$p;
+            }
+        }
+    }
+
+    return Inertia::render('Index', ['assessmentSources' => $assessment_sources, 'assessmentSource' => $assessment_source, 'marksheet' => $marksheet]);
 });
 
 Route::get('/arbor-import', [ArborImportController::class, 'import_wizard'])->name('arbor-import.index');
@@ -36,8 +71,10 @@ Route::get('/tests', [TestController::class, 'index'])->name('tests.index');
 Route::post('tests', [TestController::class, 'store']);
 Route::get('/tests/create', [TestController::class, 'create'])->name('tests.create');
 Route::get('/tests/{test}', [TestController::class, 'show'])->name('tests.show');
-//Front end isn't playing ball. Can't be arsed to look at it anymore, it's making me angry. TODO: fix this before production.
-//Route::get('/tests/{test}/edit', [TestController::class, 'edit']);
+/*
+ * Front end isn't playing ball. Can't be arsed to look at it anymore, it's making me angry. TODO: fix this before production.
+ * Route::get('/tests/{test}/edit', [TestController::class, 'edit']);
+ */
 Route::delete('/tests/{test}', [TestController::class, 'destroy']);
 Route::get('/tests/{test}/assign', [TestController::class, 'show_assign'])->name('tests.assign.show');
 Route::patch('/tests/{test}/assign', [TestController::class, 'assign'])->name('tests.assign');

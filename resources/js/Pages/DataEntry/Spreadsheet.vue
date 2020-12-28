@@ -88,7 +88,8 @@ export default {
             // need to extract CSRF token from cookie
             // TODO: move this to app.js and set it globally on an axios instance
             const csrfToken = this.getCookie('XSRF-TOKEN');
-            axios.patch('/marks', {marks}, { headers: {
+
+            axios.patch(`${this.$page.props.appUrl}/marks`, {marks}, { headers: {
                 'X-XSRF-TOKEN': csrfToken
                 }})
             .catch(err=>console.error(err))

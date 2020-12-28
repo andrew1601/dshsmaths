@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "awobaz/compoships": "^2.0",
         "barryvdh/laravel-dompdf": "^0.8.7",
         "barryvdh/laravel-snappy": "^0.4.8",
         "doctrine/dbal": "^2.12",
@@ -19,6 +20,7 @@
         "inertiajs/inertia-laravel": "^0.3.3",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "staudenmeir/eloquent-has-many-deep": "^1.13",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
