@@ -24,7 +24,7 @@
         </div>
 
         <div class="form-group" v-if="(selectedTest >= 0) && (selectedPaper >= 0) && (selectedTeachingGroup >= 0)">
-            <inertia-link :href="`${this.$page.props.appUrl}/data-entry/paper/${selectedPaper}/teaching-group/${selectedTeachingGroup}`" class="btn btn-primary full-width-button">Open Spreadsheet</inertia-link>
+            <inertia-link :href="`${$page.props.appUrl}/data-entry/paper/${selectedPaper}/teaching-group/${selectedTeachingGroup}`" class="btn btn-primary full-width-button">Open Spreadsheet</inertia-link>
         </div>
     </layout>
 </template>

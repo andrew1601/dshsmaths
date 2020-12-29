@@ -2,10 +2,16 @@
     <layout>
         <h2>DSHS Maths Test Database</h2>
         <div class="form-group mt-3">
-            <select name="marksheet_class_select" id="marksheetClassSelect" v-model="selectedAssessmentSource" class="custom-select">
-                <option :value="null" selected disabled>Select an assessment source...</option>
-                <option v-for="a in assessmentSources" :value="a.id">{{ a.name }}</option>
-            </select>
+<!--            <select name="marksheet_class_select" id="marksheetClassSelect" v-model="selectedAssessmentSource" class="custom-select">-->
+<!--                <option :value="null" selected disabled>Select an assessment source...</option>-->
+<!--                <option v-for="a in assessmentSources" :value="a.id">{{ a.name }}</option>-->
+<!--            </select>-->
+            <ul class="nav nav-pills">
+                <li class="nav-item" v-for="a in assessmentSources" :key="a.id">
+                    <inertia-link :href="`${$page.props.appUrl}/?assessment_source=${a.id}`" :class="{'nav-link': true, 'active': a.id === currentAssessmentSource}">{{ a.name }}</inertia-link>
+                </li>
+            </ul>
+
             <table class="table table-sm table-hover table-striped table-bordered mt-5" v-if="assessmentSource">
                 <thead>
                     <tr>
@@ -56,7 +62,7 @@ export default {
     ],
     data() {
         return {
-            selectedAssessmentSource: this.assessmentSource ? this.assessmentSource.id : null,
+            currentAssessmentSource: this.assessmentSource ? this.assessmentSource.id : null,
         }
     },
     watch: {

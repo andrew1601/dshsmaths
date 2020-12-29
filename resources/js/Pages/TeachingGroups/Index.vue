@@ -14,8 +14,8 @@
             </thead>
             <tbody>
                 <tr v-for="teachingGroup in teachingGroups" :key="teachingGroup.id">
-                    <td><inertia-link :href="`${this.$page.props.appUrl}/teaching-groups/${teachingGroup.id}`">{{teachingGroup.name}}</inertia-link></td>
-                    <td><inertia-link :href="`${this.$page.props.appUrl}/teaching-groups/${teachingGroup.id}`" method="delete" as="button" class="btn btn-sm btn-danger">Delete</inertia-link></td>
+                    <td><inertia-link :href="`${$page.props.appUrl}/teaching-groups/${teachingGroup.id}`">{{teachingGroup.name}}</inertia-link></td>
+                    <td><inertia-link :href="`${$page.props.appUrl}/teaching-groups/${teachingGroup.id}`" method="delete" as="button" class="btn btn-sm btn-danger">Delete</inertia-link></td>
                 </tr>
             </tbody>
         </table>

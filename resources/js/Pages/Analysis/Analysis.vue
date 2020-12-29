@@ -3,7 +3,7 @@
     <div class="mx-3">
         <div class="row">
             <div class="col-md-4">
-                <img width="100%" src="/img/dshs_badge_and_text_black.png" alt="">
+                <img width="100%" :src="`${$page.props.appUrl}/img/dshs_badge_and_text_black.png`" alt="">
             </div>
             <div class="col-md-8">
                 <h3 class="analysis-title">Assessment Analysis</h3>
@@ -45,12 +45,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(question, index) in paper.questions" :key="`question-${question.id}`" :class="getRowHighlightClass(analysis.marks[paper.id][index].mark / question.marks)">
+                        <tr v-for="(question, index) in paper.questions" :key="`question-${question.id}`" :class="getRowHighlightClass(markForPaperAndIndex(paper.id, index) / question.marks)">
                             <td>{{ question.number }}</td>
                             <td>{{ question.area }}</td>
                             <td>{{ question.topic }}</td>
                             <td>{{ question.marks }}</td>
-                            <td>{{ analysis.marks[paper.id][index].mark }}</td>
+                            <td>{{ markForPaperAndIndex(paper.id, index) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -121,6 +121,10 @@ export default {
                 console.error(`getRowHighlightClass: ${percentage} out of bounds.`);
             }
         },
+
+        markForPaperAndIndex(paper, index) {
+            return this.analysis.marks[paper][index] ? this.analysis.marks[paper][index].mark : 0;
+        }
     }
 }
 </script>

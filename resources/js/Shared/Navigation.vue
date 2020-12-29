@@ -11,10 +11,10 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <inertia-link :href="`${this.$page.props.appUrl}/data-entry`" :class="{'nav-link': true, 'active': route().current('data-entry.*')}">Data Entry</inertia-link>
+                    <inertia-link :href="`${$page.props.appUrl}/data-entry`" :class="{'nav-link': true, 'active': route().current('data-entry.*')}">Data Entry</inertia-link>
                 </li>
                 <li class="nav-item">
-                    <inertia-link :href="`${this.$page.props.appUrl}/analysis`" :class="{'nav-link': true, 'active': route().current('analysis.*')}">Analysis</inertia-link>
+                    <inertia-link :href="`${$page.props.appUrl}/analysis`" :class="{'nav-link': true, 'active': route().current('analysis.*')}">Analysis</inertia-link>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navExportDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

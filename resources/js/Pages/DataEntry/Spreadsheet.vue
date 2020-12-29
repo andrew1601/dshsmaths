@@ -36,7 +36,7 @@ export default {
     ],
     data() {
         return {
-            showConsole: true,
+            showConsole: false,
             changes: [],
             hotSettings: {
                 startRows: this.teachingGroup.students.length,

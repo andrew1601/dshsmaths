@@ -17,7 +17,7 @@
             </thead>
             <tbody>
                 <tr v-for="test in tests">
-                    <td><inertia-link :href="`${this.$page.props.appUrl}/tests/${test.id}`">{{ test.name }}</inertia-link></td>
+                    <td><inertia-link :href="`${$page.props.appUrl}/tests/${test.id}`">{{ test.name }}</inertia-link></td>
                     <td>{{ test.assessment_source.name }}</td>
                     <td>{{ test.papers.length }}</td>
                     <td>{{ totalMarks(test) }}</td>
@@ -27,8 +27,8 @@
                         </div>
                     </td>
                     <td>
-                        <inertia-link :href="`${this.$page.props.appUrl}/tests/${test.id}/assign`" class="btn btn-sm btn-primary">Assign</inertia-link>
-                        <inertia-link :href="`${this.$page.props.appUrl}/tests/${test.id}/edit`" class="btn btn-sm btn-secondary">Edit</inertia-link>
+                        <inertia-link :href="`${$page.props.appUrl}/tests/${test.id}/assign`" class="btn btn-sm btn-primary">Assign</inertia-link>
+                        <inertia-link :href="`${$page.props.appUrl}/tests/${test.id}/edit`" class="btn btn-sm btn-secondary">Edit</inertia-link>
                         <button class="btn btn-sm btn-danger" @click="prepForDelete(test)">Delete</button>
                     </td>
                 </tr>

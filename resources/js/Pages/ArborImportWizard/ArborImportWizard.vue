@@ -1,6 +1,6 @@
 <template>
     <layout>
-        <h2><img :src="`${this.$page.props.appUrl}/img/arbor-icon.png`" width="32" class="mr-2" alt="">Arbor Import Wizard</h2>
+        <h2><img :src="`${$page.props.appUrl}/img/arbor-icon.png`" width="32" class="mr-2" alt="">Arbor Import Wizard</h2>
 
         <div class="alert alert-danger my-3" v-if="Object.keys(errors).length > 0">
             <h4 class="alert-heading">Oops...</h4>
