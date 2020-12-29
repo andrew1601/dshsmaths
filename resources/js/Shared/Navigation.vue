@@ -11,18 +11,18 @@
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <inertia-link :href="`${$page.props.appUrl}/data-entry`" :class="{'nav-link': true, 'active': route().current('data-entry.*')}">Data Entry</inertia-link>
+                    <inertia-link :href="`${this.$page.props.appUrl}/data-entry`" :class="{'nav-link': true, 'active': route().current('data-entry.*')}">Data Entry</inertia-link>
                 </li>
                 <li class="nav-item">
-                    <inertia-link :href="`${$page.props.appUrl}/analysis`" :class="{'nav-link': true, 'active': route().current('analysis.*')}">Analysis</inertia-link>
+                    <inertia-link :href="`${this.$page.props.appUrl}/analysis`" :class="{'nav-link': true, 'active': route().current('analysis.*')}">Analysis</inertia-link>
                 </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" id="navExportDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Export
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navExportDropdown">
-                        <inertia-link :href="`${$page.props.appUrl}/export/analysis`" :class="{'dropdown-item': true, 'active': route().current('export.analysis.*')}">Analysis Sheets</inertia-link>
-                        <inertia-link :href="`${$page.props.appUrl}/export/yellow-sheets`" :class="{'dropdown-item': true, 'active': route().current('export.yellow-sheets.*')}">Yellow Sheets</inertia-link>
+                        <inertia-link :href="`${this.$page.props.appUrl}/export/analysis`" :class="{'dropdown-item': true, 'active': route().current('export.analysis.*')}">Analysis Sheets</inertia-link>
+                        <inertia-link :href="`${this.$page.props.appUrl}/export/yellow-sheets`" :class="{'dropdown-item': true, 'active': route().current('export.yellow-sheets.*')}">Yellow Sheets</inertia-link>
                     </div>
                 </li>
             </ul>
@@ -32,9 +32,9 @@
                         Manage
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navManageDropdown">
-                        <inertia-link :href="`${$page.props.appUrl}/arbor-import`" :class="{'dropdown-item': true, 'active': route().current('arbor-import.*')}">Arbor Sync</inertia-link>
-                        <inertia-link :href="`${$page.props.appUrl}/teaching-groups`" :class="{'dropdown-item': true, 'active': route().current('teaching-groups.*')}">Teaching Groups</inertia-link>
-                        <inertia-link :href="`${$page.props.appUrl}/tests`" class="dropdown-item" :class="{'dropdown-item': true, 'active': route().current('tests.*')}">Tests</inertia-link>
+                        <inertia-link :href="`${this.$page.props.appUrl}/arbor-import`" :class="{'dropdown-item': true, 'active': route().current('arbor-import.*')}">Arbor Sync</inertia-link>
+                        <inertia-link :href="`${this.$page.props.appUrl}/teaching-groups`" :class="{'dropdown-item': true, 'active': route().current('teaching-groups.*')}">Teaching Groups</inertia-link>
+                        <inertia-link :href="`${this.$page.props.appUrl}/tests`" class="dropdown-item" :class="{'dropdown-item': true, 'active': route().current('tests.*')}">Tests</inertia-link>
                     </div>
                 </li>
             </ul>
