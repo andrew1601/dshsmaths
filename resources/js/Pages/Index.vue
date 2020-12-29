@@ -56,8 +56,7 @@ export default {
     ],
     data() {
         return {
-            selectedAssessmentSource: this.assessmentSource.id ?? null,
-
+            selectedAssessmentSource: this.assessmentSource ? this.assessmentSource.id : null,
         }
     },
     watch: {
