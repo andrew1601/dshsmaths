@@ -40,7 +40,7 @@ class HandleInertiaRequests extends Middleware
             'appName' => config('app.name'),
             'appDir' => config('app.dir'),
             'appUrl' => config('app.url'),
-            'appUser' => $_SERVER['PHP_AUTH_USER'],
+            'appUser' => isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : 'Dev Mode',
         ]);
     }
 }
