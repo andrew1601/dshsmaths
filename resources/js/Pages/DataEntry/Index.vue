@@ -1,8 +1,6 @@
 <template>
     <layout>
-        <h3>Data Entry Component</h3>
-
-        <div class="form-group">
+        <div class="form-group mt-2">
             <select name="test_select" id="testSelect" class="custom-select" v-model="selectedTest">
                 <option :value="-1" selected disabled>Select a test...</option>
                 <option v-for="(test, index) in tests" :key="test.id" :value="test.id">{{ test.name }}</option>
