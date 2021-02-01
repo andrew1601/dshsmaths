@@ -40,7 +40,9 @@ class Student extends Model
     public function baseline_for_assessment_source(AssessmentSource $assessment_source)
     {
         return $this->baselines()->where('assessment_source_id', '=', $assessment_source->id)->firstOr(function() {
-            return 'NOBASELINE';
+            $tmp = new Baseline();
+            $tmp->grade = "!!";
+            return $tmp;
         });
     }
 

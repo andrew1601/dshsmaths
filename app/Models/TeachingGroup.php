@@ -28,5 +28,10 @@ class TeachingGroup extends Model
         return $this->belongsToMany(Test::class);
     }
 
+    public function cohort()
+    {
+        return $this->belongsTo(Cohort::class);
+    }
+
 
 }

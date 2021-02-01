@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AssessmentSource;
+use App\Models\Cohort;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -22,9 +23,11 @@ class TestController extends Controller
     public function create()
     {
         $assessment_sources = AssessmentSource::all();
+        $cohorts = Cohort::all();
 
         return Inertia::render('Tests/Create', [
-            'assessmentSources' => $assessment_sources
+            'assessmentSources' => $assessment_sources,
+            'cohorts' => $cohorts
         ]);
     }
 
@@ -53,6 +56,7 @@ class TestController extends Controller
         $validated_data = request()->validate([
             'name' => 'required|string',
             'assessmentSource' => 'required|integer|exists:assessment_sources,id',
+            'cohort' => 'required|integer|exists:cohorts,id',
             'papers' => 'required|array',
             'papers.*.name' => 'string',
             'papers.*.questions' => 'required|array',
@@ -68,6 +72,7 @@ class TestController extends Controller
         // Create the test
         $test = Test::create([
             'name' => $validated_data['name'],
+            'cohort_id' => $validated_data['cohort']
         ]);
 
         // Get the assessment source

@@ -34,6 +34,6 @@ class Baseline extends Model
             '1' => '1-3', '2' => '2-4', '3' => '3-5', '4' => '4-6', '5', '5-7', '6' => '6-8', '7' => '7-9', '8' => '8-9', '9' => '9',
         ];
 
-        return $grades[$this->grade];
+        return ($this->grade == "!!") ? "!!" : $grades[$this->grade];
     }
 }

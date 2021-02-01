@@ -17,6 +17,12 @@
                 <option v-for="assessmentSource in assessmentSources" :key="assessmentSource.id" :value="assessmentSource.id">{{ assessmentSource.name }}</option>
             </select>
         </div>
+        <div class="form-group mt-3">
+            <select name="test_cohort" id="testCohort" class="custom-select" v-model="selectedCohort">
+                <option :value="null" selected disabled>Select a cohort to associate this test with...</option>
+                <option v-for="cohort in cohorts" :key="cohort.id" :value="cohort.id">{{ cohort.name }}</option>
+            </select>
+        </div>
 
         <div class="row">
             <div class="col-lg-8">
@@ -85,7 +91,8 @@ export default {
         'editing',
         'test',
         'errors',
-        'assessmentSources'
+        'assessmentSources',
+        'cohorts'
     ],
     created() {
         if (this.editing){
@@ -113,6 +120,7 @@ export default {
         return {
             testName: '',
             selectedAssessmentSource: null,
+            selectedCohort: null,
             maxPapers: 4,
             currentPaperIndex: -1,
             papers: [],

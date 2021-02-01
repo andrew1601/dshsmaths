@@ -37,6 +37,7 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navManageDropdown">
                         <inertia-link :href="`${this.$page.props.appUrl}/arbor-import`" :class="{'dropdown-item': true, 'active': route().current('arbor-import.*')}">Arbor Sync</inertia-link>
                         <inertia-link :href="`${this.$page.props.appUrl}/teaching-groups`" :class="{'dropdown-item': true, 'active': route().current('teaching-groups.*')}">Teaching Groups</inertia-link>
+                        <inertia-link :href="`${this.$page.props.appUrl}/cohorts`" :class="{'dropdown-item': true, 'active': route().current('cohorts.*')}">Cohorts</inertia-link>
                         <inertia-link :href="`${this.$page.props.appUrl}/tests`" class="dropdown-item" :class="{'dropdown-item': true, 'active': route().current('tests.*')}">Tests</inertia-link>
                     </div>
                 </li>
