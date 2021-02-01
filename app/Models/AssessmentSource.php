@@ -9,6 +9,7 @@ use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use App\Models\TeachingGroup;
 use App\Models\Student;
 use App\Models\Baseline;
+use App\Relations\Custom;
 
 class AssessmentSource extends Model
 {
@@ -17,6 +18,21 @@ class AssessmentSource extends Model
 
     public $incrementing = false;
     protected $guarded = [];
+
+    public function cohorts() : Custom {
+        return new Custom(Cohort::query(), $this);
+    }
+
+//    public function cohorts()
+//    {
+//        $relation = $this->hasManyThrough(Cohort::class, TeachingGroup::class);
+//        return Cohort::select('cohorts.*')->distinct()->join('teaching_groups', 'teaching_groups.cohort_id', '=', 'cohorts.id')->where('teaching_groups.assessment_source_id', $this->id)->get();
+//    }
+
+//    public function cohorts()
+//    {
+//        return $this->hasManyDeep(Cohort::class, [TeachingGroup::class]);
+//    }
 
     public function teaching_groups()
     {

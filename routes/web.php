@@ -10,6 +10,7 @@ use App\Http\Controllers\DataEntryController;
 use App\Http\Controllers\MarkController;
 use App\Http\Controllers\AnalysisController;
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\CohortController;
 
 use App\Models\TeachingGroup;
 use App\Models\AssessmentSource;
@@ -29,35 +30,42 @@ Route::get('/', function() {
 
     $assessment_source = null;
     $marksheet = null;
+    $cohort = null;
 
     if (request()->has('assessment_source')) {
         $assessment_source = AssessmentSource::find(request()->query('assessment_source'));
-        $assessment_source->load(['students', 'tests', 'tests.papers']);
+        $assessment_source->load(['students', 'tests', 'tests.papers', 'cohorts']);
 
-        // Generate marksheet for assessment source
-        $marksheet = [];
-        foreach ($assessment_source->students as $student) {
-            $marksheet[$student->upn] = [];
-            $marksheet[$student->upn]['student'] = $student;
-            $marksheet[$student->upn]['student']['igr'] = $student->baseline_for_assessment_source($assessment_source)->igr();
-            $marksheet[$student->upn]['tests'] = [];
-            $p = 0;
-            foreach ($assessment_source->tests as $test) {
-                $total_marks = 0;
-                $marksheet[$student->upn]['tests'][$p] = [];
-                $marksheet[$student->upn]['tests'][$p]['papers'] = [];
-                foreach ($test->papers as $paper) {
-                   array_push($marksheet[$student->upn]['tests'][$p]['papers'], $paper->marks_for_student($student));
-                    $total_marks += $paper->marks_for_student($student);
-                }
-                $marksheet[$student->upn]['tests'][$p]['total_marks'] = $total_marks;
-                $marksheet[$student->upn]['tests'][$p]['grade'] = $test->grade_from_total_marks($total_marks);
-                ++$p;
-            }
+        if (request()->has('cohort_id')) {
+            $cohort = \App\Models\Cohort::find(request()->query('cohort_id'));
+            // Generate marksheet for assessment source
+            $marksheet = [];
+                    foreach ($cohort->students as $student) {
+                        $marksheet[$student->upn] = [];
+                        $marksheet[$student->upn]['student'] = $student;
+                        $marksheet[$student->upn]['student']['igr'] = $student->baseline_for_assessment_source($assessment_source)->igr();
+                        $marksheet[$student->upn]['tests'] = [];
+                        $p = 0;
+                        foreach ($assessment_source->tests as $test) {
+                            if ($test->cohort_id != $cohort->id) {
+                                continue;
+                            }
+                            $total_marks = 0;
+                            $marksheet[$student->upn]['tests'][$p] = [];
+                            $marksheet[$student->upn]['tests'][$p]['papers'] = [];
+                            foreach ($test->papers as $paper) {
+                               array_push($marksheet[$student->upn]['tests'][$p]['papers'], $paper->marks_for_student($student));
+                                $total_marks += $paper->marks_for_student($student);
+                            }
+                            $marksheet[$student->upn]['tests'][$p]['total_marks'] = $total_marks;
+                            $marksheet[$student->upn]['tests'][$p]['grade'] = $test->grade_from_total_marks($total_marks);
+                            ++$p;
+                        }
+                    }
         }
     }
 
-    return Inertia::render('Index', ['assessmentSources' => $assessment_sources, 'assessmentSource' => $assessment_source, 'marksheet' => $marksheet]);
+    return Inertia::render('Index', ['assessmentSources' => $assessment_sources, 'assessmentSource' => $assessment_source, 'cohort' => $cohort, 'marksheet' => $marksheet]);
 });
 
 Route::get('/arbor-import', [ArborImportController::class, 'import_wizard'])->name('arbor-import.index');
@@ -89,3 +97,8 @@ Route::get('/analysis', [AnalysisController::class, 'index'])->name('analysis.in
 Route::get('/analysis/test/{test}/teaching-group/{teaching_group}/student/{student}', [AnalysisController::class, 'show'])->name('analysis.show');
 
 Route::get('/pdf-test', [ExportController::class, 'test']);
+
+Route::get('/cohorts', [CohortController::class, 'index'])->name('cohorts.index');
+Route::post('/cohorts', [CohortController::class, 'store']);
+Route::delete('/cohorts/{cohort}', [CohortController::class, 'destroy']);
+Route::patch('/cohorts/{cohort}', [CohortController::class, 'update']);

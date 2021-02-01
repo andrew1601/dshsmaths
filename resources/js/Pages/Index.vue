@@ -9,16 +9,22 @@
                 </li>
             </ul>
 
-            <table class="table table-sm table-hover table-striped table-bordered mt-5" v-if="assessmentSource">
+            <ul class="nav nav-pills" v-if="assessmentSource">
+                <li class="nav-item" v-for="c in assessmentSource.cohorts" :key="c.id">
+                    <inertia-link :href="`${$page.props.appUrl}/?assessment_source=${currentAssessmentSource}&cohort_id=${c.id}`" :class="{'nav-link': true, 'active': c.id === currentCohort}">{{ c.name }}</inertia-link>
+                </li>
+            </ul>
+
+            <table class="table table-sm table-hover table-striped table-bordered mt-5" v-if="marksheet">
                 <thead>
                     <tr>
                         <th rowspan="2">Student</th>
                         <th rowspan="2">IGR</th>
                         <th rowspan="2">Teaching Group</th>
-                        <th class="text-center" :colspan="test.papers.length + 2" v-for="test in assessmentSource.tests">{{ test.name }}</th>
+                        <th class="text-center" :colspan="test.papers.length + 2" v-for="test in assessmentSource.tests" v-if="test.cohort_id === cohort.id">{{ test.name }}</th>
                     </tr>
                     <tr>
-                        <template v-for="test in assessmentSource.tests">
+                        <template v-for="test in assessmentSource.tests" v-if="test.cohort_id===cohort.id">
                             <th v-for="(paper, index) in test.papers">Paper {{ index + 1 }}</th>
                             <th>Total</th>
                             <th>Grade</th>
@@ -29,7 +35,7 @@
                         <tr v-for="row in marksheet">
                             <td>{{ row.student.last_name.toUpperCase() }} {{ row.student.first_name }}</td>
                             <td>{{ row.student.igr }}</td>
-                            <td>{{ row.student.teaching_group.name }}</td>
+                            <td>{{ row.student.teaching_group }}</td>
                             <template v-for="test in row.tests">
                                 <td v-for="paper in test.papers">{{ paper }}</td>
                                 <td>{{ test.total_marks }}</td>
@@ -55,11 +61,13 @@ export default {
     props: [
         'assessmentSources',
         'assessmentSource',
-        'marksheet'
+        'marksheet',
+        'cohort'
     ],
     data() {
         return {
             currentAssessmentSource: this.assessmentSource ? this.assessmentSource.id : null,
+            currentCohort: this.cohort ? this.cohort.id : null
         }
     },
     watch: {

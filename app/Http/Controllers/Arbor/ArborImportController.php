@@ -185,9 +185,10 @@ class ArborImportController extends Controller
                     return $student;
                 });
 
-                // Attach this student to the current teaching group
-                // TODO: check student isn't already in teaching group to avoid duplicate entries.
-                $teaching_group->students()->attach($student);
+                // Attach this student to the current teaching group if they are not already in it.
+                if (!$teaching_group->students->contains($student->upn)){
+                    $teaching_group->students()->attach($student);
+                }
 
                 // Add student to ids array for baseline fetch
                 array_push($student_ids, $arbor_student->id);
@@ -252,8 +253,8 @@ class ArborImportController extends Controller
         }
 
         // With a bit of luck, everything should have imported. Moment of truth....
-        // TODO: some way of storing each import log... in a file probs, or new db table??
-
         return Inertia::render('ArborImportWizard/ArborImportDone');
+
+        // TODO: some way of storing each import log... in a file probs, or new db table??
     }
 }
