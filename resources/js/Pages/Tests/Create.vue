@@ -166,7 +166,7 @@ export default {
                 questions: paper.questions.filter(row => !((row.number === null) && (row.area === null) && (row.topic === null) && (row.marks === null)))
             }));
 
-            this.$inertia.post(`${this.$page.props.appUrl}/tests`, {name, assessmentSource: this.selectedAssessmentSource, papers, gradeBoundaries});
+            this.$inertia.post(`${this.$page.props.appUrl}/tests`, {name, assessmentSource: this.selectedAssessmentSource, cohort: this.selectedCohort, papers, gradeBoundaries});
         }
     },
     computed: {
